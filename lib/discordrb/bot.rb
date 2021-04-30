@@ -370,15 +370,12 @@ module Discordrb
     # @param message_reference [Message, String, Integer, nil] The message, or message ID, to reply to if any.
     # @return [Message] The message that was sent.
     def send_message(channel, content, tts = false, embed = nil, attachments = nil, allowed_mentions = nil, message_reference = nil)
-      if !content.include? "pzpl is"
-        channel = channel.resolve_id
-        debug("Sending message to #{channel} with content '#{content}'")
-        allowed_mentions = { parse: [] } if allowed_mentions == false
-        message_reference = { message_id: message_reference.id } if message_reference
-
-        response = API::Channel.create_message(token, channel, content, tts, embed&.to_hash, nil, attachments, allowed_mentions&.to_hash, message_reference)
-        Message.new(JSON.parse(response), self)
-      end
+      channel = channel.resolve_id
+      debug("Sending message to #{channel} with content '#{content}'")
+      allowed_mentions = { parse: [] } if allowed_mentions == false
+      message_reference = { message_id: message_reference.id } if message_reference
+      response = API::Channel.create_message(token, channel, content, tts, embed&.to_hash, nil, attachments, allowed_mentions&.to_hash, message_reference)
+      Message.new(JSON.parse(response), self)
     end
 
     # Sends a text message to a channel given its ID and the message's content,

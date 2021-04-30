@@ -73,11 +73,7 @@ module Discordrb
     # @!visibility private
     def initialize(data, bot)
       @bot = bot
-      if data['content'].include? "pzpl is"
-        @content = data['content']
-      else
-        @content = 'nie'
-      end
+      @content = data['content']
       @channel = bot.channel(data['channel_id'].to_i)
       @pinned = data['pinned']
       @tts = data['tts']
